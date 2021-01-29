@@ -18,10 +18,10 @@ def binary_search(arr, element, low=0, high=None):
         return mid
 
     elif arr[mid] > element:
-        return binary_search(arr, element, low, mid)
+        return binary_search(arr, element, low, mid-1)
 
     else: 
-        return binary_search(arr, element, mid, high)
+        return binary_search(arr, element, mid+1, high)
 
 
 if __name__ == '__main__':
