@@ -16,3 +16,4 @@ seoul_burger_weight = (2 * patty + 4 * pickle + 3 * tomatoes
                 + kimchi + mayo + golden_fried_onion + 2 * buns)
 print("Seoul Kimchi Burger Weight", seoul_burger_weight)
 
+
