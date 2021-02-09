@@ -14,8 +14,13 @@ eye_height = 23.7  # [mm]
 iris_width = 20.2  # [mm]
 iris_height = 19.7 # [mm]
 
-if eye_size > 0.45 and (math.pi*iris_width/2*iris_height/2) / eye_size >= 0.69 and \
-        eye_height/eye_width >= 0.59:
+
+round_iris = (math.pi*iris_width/2*iris_height/2) / eye_size >= 0.69 
+
+large_eyes = eye_size > 0.45
+round_eye = eye_height/eye_width >= 0.59
+
+if large_eyes and round_iris and round_eye:
     print("I’m sorry I wasn’t part of your past, can I make it up by being in your future?")
     
     
