@@ -62,6 +62,8 @@ def pizza_order_form():
         crust_types=CrustType,
         toppings=ToppingType)
 
+
+
 @app.route('/order', methods=['POST'])
 def pizza_order_submit():
     order_name = request.form.get('name')
@@ -76,14 +78,19 @@ def pizza_order_submit():
     print(pizza.size)
 
     for topping_str in ToppingType:
-        pizza.toppings.append(PizzaTopping(topping=topping_str))
-
+        print(topping_str)
+        #pizza.toppings.append(PizzaTopping(topping=topping_str))
+        pizza.toppings.append(PizzaTopping(topping_type=toppings_list))
+    print(pizza.order_name)
+    # db.session.add(pizza.id)
     db.session.add(pizza)
+    db.session.commit()
 
     flash('Your order has been submitted!')
-    return redirect(url_for('/'))
+    return redirect(url_for('fulfill_order'))
 
-@app.route('/fulfill', methods=['POST'])
+
+@app.route('/fulfill', methods=['GET'])
 def fulfill_order():
     pizza_id = request.form.get('pizza_id')
     pizza = Pizza.query.filter_by(id=pizza_id).one()
@@ -94,6 +101,7 @@ def fulfill_order():
     
     flash(f'The order for {pizza.order_name} has been fulfilled.')
     return redirect(url_for('home'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

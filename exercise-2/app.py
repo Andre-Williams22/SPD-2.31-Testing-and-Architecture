@@ -13,7 +13,8 @@ from flask import Flask, render_template, request, send_file
 app = Flask(__name__)
 
 load_dotenv()
-API_KEY = os.getenv('API_KEY')
+API_KEY = '7e247499e6bbed93c3bd35baf2018838'
+# API_KEY = os.getenv('API_KEY')
 
 
 ################################################
@@ -39,25 +40,27 @@ def results():
     city = request.args.get('users_city')
     units = request.args.get('requested_units')
 
-    url = 'http://api.openweathermap.org/data/2.5/weather'
-    params = {
-        'appid': API_KEY,
-        'place': city,
-        'units': units
-    }
-    result_json = requests.get(url, params=params).json()
+    url = 'http://api.openweathermap.org/data/2.5/weather?q={city},{units}&appid={API_KEY}'
+    # params = {
+    #     'appid': API_KEY,
+    #     'place': city,
+    #     'units': units
+    # }
+    result_json = requests.get(url).json()
 
-    context = {
-        'date': datetime.now(),
-        'city': result_json['name'],
-        'description': result_json['weather'][0]['description'],
-        'temp': result_json['main']['temperature'],
-        'humidity': result_json['main']['humidity'],
-        'wind_speed': result_json['wind']['speed'],
-        'units_letter': get_letter_for_units(units)
-    }
+    print(result_json)
+    # context = {
+    #     'date': datetime.now(),
+    #     'city': result_json['name'],
+    #     'description': result_json['weather'][0]['description'],
+    #     'temp': result_json['main']['temperature'],
+    #     'humidity': result_json['main']['humidity'],
+    #     'wind_speed': result_json['wind']['speed'],
+    #     'units_letter': get_letter_for_units(units)
+    # }
 
-    return render_template('results.html', **context)
+    return result_json
+    #return render_template('results.html') # **context)
 
 
 if __name__ == '__main__':
