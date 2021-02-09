@@ -21,8 +21,8 @@ li = [5, -1, 43, 32, 87, -100]
 print(maximum_value(li))
 
 ############################
-def process(sentence):  # TODO: Rename this function to reflect what it's doing.
+def create_word_list(sentence):  # TODO: Rename this function to reflect what it's doing.
     words = sentence[0:].split(' ')
     return words
 
-print(process('If you were a vegetable, you’d be a ‘cute-cumber.'))
+print(create_word_list('If you were a vegetable, you’d be a ‘cute-cumber.'))
