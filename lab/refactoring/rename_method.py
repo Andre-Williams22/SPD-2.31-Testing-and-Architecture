@@ -9,7 +9,7 @@ def area_under_graph(graph):   # TODO: Rename this function to reflect what it's
 
 #####################
 
-def maximum_value(li):  # TODO: Rename this function to reflect what it's doing.
+def get_max_value(li):  # TODO: Rename this function to reflect what it's doing.
     m = li[0]
     for value in li:
         if value > m:
@@ -18,7 +18,7 @@ def maximum_value(li):  # TODO: Rename this function to reflect what it's doing.
 
 
 li = [5, -1, 43, 32, 87, -100]
-print(maximum_value(li))
+print(get_max_value(li))
 
 ############################
 def create_word_list(sentence):  # TODO: Rename this function to reflect what it's doing.
@@ -26,3 +26,4 @@ def create_word_list(sentence):  # TODO: Rename this function to reflect what it
     return words
 
 print(create_word_list('If you were a vegetable, you’d be a ‘cute-cumber.'))
+
