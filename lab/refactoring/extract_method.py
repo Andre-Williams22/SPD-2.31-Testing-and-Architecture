@@ -3,6 +3,7 @@
 import math 
 
 def print_stat():
+    '''Prints Statistics'''
     grade_list = []
     # Get the inputs from the user
     n_student = 5
@@ -21,7 +22,7 @@ def print_stat():
     return grade_list 
 
 def calculate_mean(grade_list):
-    '''Calculates means '''
+    '''Calculates means given a list'''
     # Calculate the mean and standard deviation of the grades
     sum_grades = 0 # Do you think 'sum' is a good var name? Run pylint to figure out!
     for grade in grade_list:
