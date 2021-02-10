@@ -20,22 +20,22 @@ class Student:
 class School:
     def __init__(self, students) -> None:
         self.students = students
+        
     def process_graduation(self):
         # Find the students in the school who have successfully graduated.
-        min_gpa = 2.5 # minimum acceptable GPA
-        passed_students = []
-        for s in self.students:
-            if s.get_gpa() > min_gpa:
-                passed_students.append(s)
-
+        passed_students = acceptable_gpa(self, students)
         # print student's name who graduated.
         print('*** Student who graduated *** ')
         for s in passed_students:
             print(s.name)
         print('****************************')
+        
+    def congrats_emails(self, passed_students):
         # Send congrat emails to them.
         for s in passed_students:
             s.send_congrat_email()
+    
+    def top_10(self, passed_students):
         # Find the top 10% of them and send their contact to the top employers
         passed_students.sort(key=lambda s: s.get_gpa())
         percentile = 0.9
@@ -44,6 +44,18 @@ class School:
         top_employers = [Employer('Microsoft'), Employer('Free Software Foundation'), Employer('Google')]
         for e in top_employers:
             e.send(top_10_percent)
+        return passed_students
+
+    def acceptable_gpa(self, students):
+        '''Calculate acceptable GPA's '''
+        min_gpa = 2.5 # minimum acceptable GPA
+        passed_students = []
+        for s in self.students:
+            if s.get_gpa() > min_gpa:
+                passed_students.append(s)
+        return passed_students
+
+
 
 students = [Student(2.1, 'donald'), Student(2.3, 'william'), Student(2.7, 'toro'), 
             Student(3.9, 'lili'), Student(3.2,'kami'), Student(3,'sarah')]
