@@ -7,15 +7,27 @@ def make_alert_sound():
 def make_accept_sound():
     print('made acceptance sound')
 
+
+ingredients = ['sodium benzoate', 'soap']
+    
+
+def logic(array):
+    toxic = {'sodium nitrate':1,'sodium benzoate':1, 
+                'sodium oxide':1}
+
+    for compound in ingredients:
+        if compound in toxic:
+            print('!!!')
+            print('there is a toxin in the food!')    
+            print('!!!')
+            make_alert_sound()
+
+        else:
+    
+            print('***')
+            print('Toxin Free')
+            print('***')
+            make_accept_sound()
+    
 ingredients = ['sodium benzoate']
-if 'sodium nitrate' in ingredients or 'sodium benzoate' in ingredients\
-or 'sodium oxide' in ingredients:
-    print('!!!')
-    print('there is a toxin in the food!')    
-    print('!!!')
-    make_alert_sound()
-else:
-    print('***')
-    print('Toxin Free')
-    print('***')
-    make_accept_sound()
+print(ingredients(ingredients))
