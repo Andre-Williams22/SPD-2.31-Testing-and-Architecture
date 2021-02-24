@@ -4,11 +4,9 @@ def find_food(food, fridge):
     for item in fridge:
         if food in item:
             item_name = item
-            return
-    if item_name:
-        return item_name
-    else:
-        return None
+            return item_name 
+    
+    return None 
 
 if __name__ == "__main__":
     food = 'wesabi'

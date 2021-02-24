@@ -23,9 +23,13 @@ class Wheel:
     #       initilaize the 'Wheel' object or you can create
     #       a setter method to set the tpms of the wheel. (you can do 
     #       both of course.)
-    def __init__(self, car = None, wheel_location = None):
+    def __init__(self, car = None, wheel_location = None, serial_number=None):
         self.car = car
         self.wheel_location = wheel_location
+        self.serial_number = serial_number
+        self.sensor_transmit_range = 300 # [feet]
+        self.sensor_pressure_range = (8,300) # [PSI]
+        self.battery_life = 6 # [year]
 
     def install_tire(self):
         print('remove old tube.')
@@ -42,23 +46,14 @@ class Wheel:
     
     def set_car(self, car):
         self.car = car
-
-
-class Tpms:
-    """Tire Pressure Monitoring System.
-    """
-    def __init__(self, serial_number):
-        self.serial_number = serial_number
-        self.sensor_transmit_range = 300 # [feet]
-        self.sensor_pressure_range = (8,300) # [PSI]
-        self.battery_life = 6 # [year]
         
     def get_pressure(self):
         return 3
     
     def get_serial_number(self):
         return self.serial_number
-    
+        
+
 class Engine:
     def __init__(self):
         pass
@@ -74,16 +69,13 @@ class Cabin:
 
 engine = Engine()
 # TODO: Rewrite the following after moving tpms to the 'Wheel' class.
-wheels = [Wheel(None, 'front-right'), Wheel(None, 'front-left'), 
-          Wheel(None, 'back-right'), Wheel(None, 'back-left')]
+wheels = [Wheel(None, 'front-right', 983408543), Wheel(None, 'front-left', 4343083), 
+          Wheel(None, 'back-right', 23654835), Wheel(None, 'back-left', 3498857)]
 
 cabin  = Cabin()
 
-tpms_di = {'front-right': Tpms(983408543), 'front-left':Tpms(4343083),
-               'back-right':Tpms(23654835), 'back_left':Tpms(3498857)}
-
 fuel_tank = FuelTank()
 
-my_car = Car(engine, wheels, cabin, tpms_di, fuel_tank)
+my_car = Car(engine, wheels, cabin, fuel_tank)
 
 

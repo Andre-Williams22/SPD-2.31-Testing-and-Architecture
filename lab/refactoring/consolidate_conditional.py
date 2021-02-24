@@ -10,18 +10,10 @@ def pour(liquid):
     print('poured', liquid + '.',)
 
 def make_shirazi_salad(ingredients):
-    if 'cucumber' not in ingredients:
+    if 'cucumber' and 'tomato' and 'onion' and 'lemon juice' not in ingredients:
         print('lacks ingredients.')
         return
-    if 'tomato' not in ingredients:
-        print('lacks ingredients.')
-        return
-    if 'onion' not in ingredients:
-        print('lacks ingredients.')
-        return
-    if 'lemon juice' not in ingredients:
-        print('lacks ingredients.')
-        return
+    
     dice(ingredients)
     mix_all(ingredients)
     add_salt()
