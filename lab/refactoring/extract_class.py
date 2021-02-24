@@ -1,5 +1,20 @@
 # by Kami Bigdely
 # Extract Class
+
+class Recipe:
+    
+    def __init__(self, name, preptime, vegetarian, foodtype, cuisine, ingredients, recipe):
+        self.name = name
+        self.preptime = preptime
+        self.vegetarian = vegetarian
+        self.foodtype = foodtype
+        self.cuisine = cuisine
+        self.ingredients = ingredients
+        self.recipe = recipe
+        
+    def __repr__(self):
+        return self.name 
+    
 foods = {'butternut squash soup':[45, True, 'soup','North African',\
      ['butter squash','onion','carrot', 'garlic','butter','black pepper', 'cinnamon','coconut milk']\
         ,'1. Grill the butter squash, onion, carrot and garlic in the oven until'
@@ -16,17 +31,24 @@ foods = {'butternut squash soup':[45, True, 'soup','North African',\
                 'seasoning 3. Add all the content to a sausage stuffer. Put the casing on'
                 "the stuffer funnel. Rotate the stuffer's handle (or turn it on) to make your yummy sausages!"]}
 
+recipes = []
 for key, value in foods.items():
-    print("Name:",key)
-    print("Prep time:",value[0], "mins")
-    print("Is Veggie?", 'Yes' if value[1] else "No")
-    print("Food Type:", value[2])
-    print("Cuisine:", value[3])
-    for item in value[4]:
-        print(item, end=', ')
-    print()
-    print("recipe", value[5])
-    print("***")
+    food = Recipe(key, value[0], value[1], value[2], value[3], value[4], value[5])
+    recipes.append(food)
+print(recipes)
+
+
+# for key, value in foods.items():
+#     print("Name:",key)
+#     print("Prep time:",value[0], "mins")
+#     print("Is Veggie?", 'Yes' if value[1] else "No")
+#     print("Food Type:", value[2])
+#     print("Cuisine:", value[3])
+#     for item in value[4]:
+#         print(item, end=', ')
+#     print()
+#     print("recipe", value[5])
+#     print("***")
 
 
 
