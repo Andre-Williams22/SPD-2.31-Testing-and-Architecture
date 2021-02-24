@@ -11,7 +11,8 @@ def get_age_carbon_14_dating(carbon_14_ratio):
         tissue (unitless). 
     """
     if carbon_14_ratio <= 0:
-        return False 
+        raise TypeError('Please provide number greater than 0')
+        return None 
         
     
     return math.log(carbon_14_ratio) / DECAY_CONSTANT * T_HALF 
@@ -30,7 +31,6 @@ def get_age_carbon_14_dating(carbon_14_ratio):
 def test_get_age_carbon_14_dating():
     with pytest.raises(TypeError):
         
-        assert get_age_carbon_14_dating(.35) == 8680.34
-        
-        assert get_age_carbon_14_dating(0) == False 
-        assert get_age_carbon_14_dating(-5) == False 
+        assert get_age_carbon_14_dating(.35) == 8680.34743633106
+        assert get_age_carbon_14_dating(0) == None
+        assert get_age_carbon_14_dating(-1) == None
