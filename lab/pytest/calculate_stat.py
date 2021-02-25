@@ -51,16 +51,10 @@ def print_stat(mean, sd):
 def test_calculate_stat():
     pass
     # with pytest.raises(TypeError):
-    # assert math.isnan(calculate_stat())
-    # assert math.isclose(calculate_stat(read_input()), 2.5)
-    # assert math.calculate_stat([10, 20, 10, 20, 10]) == 15
     assert calculate_stat([1,2,3,4,5]) == (3.0, 1.4142135623730951)
     assert calculate_stat([0]) == (0.0, 0.0)
     assert calculate_stat('hello') == None
     
     
-    
-
-
 
 display_grade_stat()
