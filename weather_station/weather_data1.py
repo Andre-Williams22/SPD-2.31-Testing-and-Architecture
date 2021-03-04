@@ -100,6 +100,36 @@ class CurrentConditionsDisplay(Observer):
             self.pressure,
         )
 
+class ForecastDisplay(Observer):
+    """The ForecastDisplay class shows the weather forcast based on the current
+    temperature, humidity and pressure."""
+
+    def __init__(self, weather_data):
+        self.weather_data = weather_data  # save the ref in an attribute.
+        weather_data.register_observer(self)  # register the observer
+        # init the forecast metrics
+        self.forecast_temp = 0
+        self.forecast_humidity = 0
+        self.forecast_pressure = 0
+
+    def update(self, temperature, humidity, pressure):
+        self.forecast_temp = temperature + 0.11 * humidity + 0.2 * pressure
+        self.forecast_humidity = humidity - 0.9 * humidity
+        self.forecast_pressure = pressure + 0.1 * temperature - 0.21 * pressure
+        self.display()
+
+    def display(self):
+        print(
+            "Forecast conditions:",
+            self.forecast_temp,
+            "F degrees and",
+            self.forecast_humidity,
+            "[%] humidity",
+            "and pressure",
+            self.forecast_pressure,
+        )
+
+
 class WeatherStation:
     def run(self):
         weather_data = WeatherData()
