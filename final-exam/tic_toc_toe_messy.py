@@ -56,30 +56,25 @@ def makeMove(board, letter, move):
     '''Allows the player make moves'''
     board[move] = letter
 
-def isWinner(bo, le):
+def isWinner(current_board, letter):
     ''' Given a board and a player’s letter, this function returns True if that player has won.
     We use bo instead of board and le instead of letter so we don’t have to type as much. '''
-    return ((bo[7] == le and bo[8] == le and bo[9] == le) or # across the top
-    (bo[4] == le and bo[5] == le and bo[6] == le) or # across the middle    # TODO: Fix the indentation of this lines and the following ones.
-    (bo[1] == le and bo[2] == le and bo[3] == le) or # across the bottom
-    (bo[7] == le and bo[4] == le and bo[1] == le) or # down the left side
-    (bo[8] == le and bo[5] == le and bo[2] == le) or # down the middle
-    (bo[9] == le and bo[6] == le and bo[3] == le) or # down the right side
-    (bo[7] == le and bo[5] == le and bo[3] == le) or # diagonal
-    (bo[9] == le and bo[5] == le and bo[1] == le)) # diagonal
+    return ((current_board[7] == letter and current_board[8] == letter and current_board[9] == letter) or # across the top
+            (current_board[4] == letter and current_board[5] == letter and current_board[6] == letter) or # across the middle     
+            (current_board[1] == letter and current_board[2] == letter and current_board[3] == letter) or # across the bottom
+            (current_board[7] == letter and current_board[4] == letter and current_board[1] == letter) or # down the left side
+            (current_board[8] == letter and current_board[5] == letter and current_board[2] == letter) or # down the middle
+            (current_board[9] == letter and current_board[6] == letter and current_board[3] == letter) or # down the right side
+            (current_board[7] == letter and current_board[5] == letter and current_board[3] == letter) or # diagonal
+            (current_board[9] == letter and current_board[5] == letter and current_board[1] == letter)) # diagonal
 
 def getBoardCopy(board):
     ''' Make a duplicate of the board list and return it the duplicate.'''
-    dupeBoard = []
-
-    for i in range(0, len(board)): # TODO: Clean this mess!
-        dupeBoard.append(board[i])
-
-    return dupeBoard
+    return [dup for dup in board]
 
 def isSpaceFree(board, move):
     ''' Return true if the passed move is free on the passed board. '''
-    return board[move] == ' '
+    return board[move] == " "
 
 def getPlayerMove(board):
     ''' Let the player type in their move. '''
