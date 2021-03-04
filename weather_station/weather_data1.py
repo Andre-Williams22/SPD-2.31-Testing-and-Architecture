@@ -45,4 +45,32 @@ class WeatherData:
         statisticsDisplay.update(temp, humidity, pressure)
         forcastDisplay.update(temp, humidity, pressure)
         
-    # other WeatherData methods here
+
+
+class CurrentConditionsDisplay(Observer):
+    def __init__(self, weather_data):
+        self.temerature = 0
+        self.humidity = 0
+        self.pressure = 0
+
+        self.weather_data = weather_data  # save the ref in an attribute.
+        weather_data.register_observer(self)  # register the observer
+        # so it gets data updates.
+
+    def update(self, temperature, humidity, pressure):
+        self.temerature = temperature
+        self.humidity = humidity
+        self.pressure = pressure
+        self.display()
+
+    def display(self):
+        print(
+            "Current conditions:",
+            self.temerature,
+            "F degrees and",
+            self.humidity,
+            "[%] humidity",
+            "and pressure",
+            self.pressure,
+        )
+
