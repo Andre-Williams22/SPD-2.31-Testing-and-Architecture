@@ -100,3 +100,26 @@ class CurrentConditionsDisplay(Observer):
             self.pressure,
         )
 
+class WeatherStation:
+    def run(self):
+        weather_data = WeatherData()
+        current_display = CurrentConditionsDisplay(weather_data)
+
+        # Create two objects from StatisticsDisplay class and
+        # ForecastDisplay class. Also register them to the concerete instance
+        # of the Subject class so the they get the measurements' updates.
+        stats_display = StatisticsDisplay(weather_data)
+        forecast_display = ForecastDisplay(weather_data)
+
+        weather_data.set_measurements(80, 65, 30.4)
+        weather_data.set_measurements(82, 70, 29.2)
+        weather_data.set_measurements(78, 90, 29.2)
+
+        # un-register the observer
+        weather_data.remove_observer(current_display)
+        weather_data.set_measurements(120, 100, 1000)
+
+
+if __name__ == "__main__":
+    ws = WeatherStation()
+    ws.run()
