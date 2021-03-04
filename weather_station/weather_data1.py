@@ -101,8 +101,7 @@ class CurrentConditionsDisplay(Observer):
         )
 
 class ForecastDisplay(Observer):
-    """The ForecastDisplay class shows the weather forcast based on the current
-    temperature, humidity and pressure."""
+    """Conveys weather forcast based on the temperature, humidity and pressure."""
 
     def __init__(self, weather_data):
         self.weather_data = weather_data  # save the ref in an attribute.
@@ -128,6 +127,72 @@ class ForecastDisplay(Observer):
             "and pressure",
             self.forecast_pressure,
         )
+
+class StatisticsDisplay(Observer):
+    """The StatisticsDisplay class stores the min/average/max measurements and display them."""
+
+    def __init__(self, weather_data):
+        self.temps = []  # all recorded temperatures
+        self.humidities = []  # all recorded humidity measurements
+        self.pressures = []  # all recorded pressures
+
+        self.weather_data = weather_data  # save the ref in an attribute.
+        weather_data.register_observer(self)  # register the observer
+
+    def update(self, temperature, humidity, pressure):
+        # add the new measurements to our records
+        self.temps.append(temperature)
+        self.humidities.append(humidity)
+        self.pressures.append(pressure)
+        # display the changes
+        self.display()
+
+    def get_stats(self, units):
+        """return min, max, and avg of a list"""
+        # decide the list we want stats from
+        
+        measurements = {'F degrees': 'temp',
+                        '[%]': 'humidity',
+                        }
+        
+        
+        if units in measurements:
+            measurement = measurements[units]
+            if measurement == 'temp':
+                values = self.temps
+            else:
+                values = self.humidities
+        else: 
+            values = self.pressures
+            measurement = "pressure"
+        # form the message
+        msg= (f"Min {measurement}: {min(values)} {units}" 
+                    + f"Avg {measurement}: {max(values)} {units}"
+                    + f"Max {measurement}: {sum(values) / len(values)} {units}"
+        )
+        # return the message
+        return msg
+
+    def display(self):
+        # display stats for all 3 measures
+        if len(self.temps) > 0:
+            temp_message = self.get_stats("F degrees")
+        else:
+            temp_message = "No temperature stats"
+        print(temp_message)
+
+        if len(self.humidities) > 0:
+            h_message = self.get_stats("[%]")
+        else:
+            h_message = "No humidity stats"
+        print(h_message)
+
+        if len(self.pressures) > 0:
+            pressure_message = self.get_stats("")
+        else:
+            pressure_message = "No pressure stats"
+        print(pressure_message)
+
 
 
 class WeatherStation:
