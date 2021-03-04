@@ -4,7 +4,7 @@
 # TODOs:  
 # 1. Find all TODO items and see whether you can improve the code. 
 #    In most cases (if not all), you can make them more readable/modular.
-# 2. Add/fix function's docstrings (use """ insted of # for function's header
+# 2. Add/fix function's docstrings (use """ instead of # for function's header
 #    comments)
 
 import random
@@ -146,23 +146,24 @@ def isBoardFull(board):
     return True
 
 
-print('Welcome to Tic Tac Toe!')
 
-# TODO: The following mega code block is a huge hairy monster. Break it down 
-# into smaller methods. Use TODO s and the comment above each section as a guide 
-# for refactoring.
+def gameLogic():
+    '''This function determines the game logic based on the users input and decision making.'''
 
-while True:
+    # TODO: The following mega code block is a huge hairy monster. Break it down 
+    # into smaller methods. Use TODO s and the comment above each section as a guide 
+    # for refactoring.
+    
     # Reset the board
     theBoard = [' '] * 10 # TODO: Refactor the magic number in this line (and all of the occurrences of 10 thare are conceptually the same.)
     playerLetter, computerLetter = inputPlayerLetter()
     turn = whoGoesFirst()
     print('The ' + turn + ' will go first.')
     gameIsPlaying = True # TODO: Study how this variable is used. Does it ring a bell? (which refactoring method?) 
-                         #       See whether you can get rid of this 'flag' variable. If so, remove it.
+                        #       See whether you can get rid of this 'flag' variable. If so, remove it.
 
     while gameIsPlaying: # TODO: Usually (not always), loops (or their content) are good candidates to be extracted into their own function.
-                         #       Use a meaningful name for the function you choose.
+                        #       Use a meaningful name for the function you choose.
         if turn == 'player':
             # Player’s turn.
             drawBoard(theBoard)
@@ -198,5 +199,21 @@ while True:
                 else: # TODO: Is this 'else' necessary?
                     turn = 'player'
 
-    if not playAgain():
-        break
+
+
+
+
+
+
+if __name__ == '__main__':
+        
+    print('Welcome to Tic Tac Toe!')
+
+    while True:
+        
+        gameLogic()
+        
+        if not playAgain():
+            break
+        
+    print('Thanks For Playing!')
