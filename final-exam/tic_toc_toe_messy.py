@@ -41,7 +41,6 @@ def inputPlayerLetter():
 
 def whoGoesFirst():
     ''' Function to determine who goes first in the game '''
-
     if random.randint(0, 1) == 0:
         return 'computer'
     else:                       
@@ -78,28 +77,28 @@ def isSpaceFree(board, move):
 
 def getPlayerMove(board):
     ''' Let the player type in their move. '''
-    move = ' ' # TODO: W0621: Redefining name 'move' from outer scope. Hint: Fix it according to https://stackoverflow.com/a/25000042/81306
-    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):
+    decision = None
+    possibilities = [str(num) for num in range(1, len(board)+1)] 
+    while decision not in possibilities or not isSpaceFree(board, int(decision)):
         print('What is your next move? (1-9)')
-        move = input()
-    return int(move)
+        decision = input()
+    return int(decision)
 
 def chooseRandomMoveFromList(board, movesList):
     ''' Returns a valid move from the passed list on the passed board.
     # Returns None if there is no valid move. '''
     possibleMoves = []
-    for i in movesList:
-        if isSpaceFree(board, i):
-            possibleMoves.append(i)
+    for move in movesList:
+        if isSpaceFree(board, move):
+            possibleMoves.append(move)
 
-    if len(possibleMoves) != 0: # TODO: How would you write this pythanically? (You can google for it!)
+    if possibleMoves: 
         return random.choice(possibleMoves)
-    else: # TODO: is this 'else' necessary?
-        return None
+    return None
 
-def getComputerMove(board, computerLetter): # TODO: W0621: Redefining name 'computerLetter' from outer scope. Hint: Fix it according to https://stackoverflow.com/a/25000042/81306
+def getComputerMove(board, computerPiece):
     ''' Given a board and the computer's letter, determine where to move and return that move. '''
-    if computerLetter == 'X':
+    if computerPiece == 'X':
         playerLetter = 'O'
     else:
         playerLetter = 'X'
@@ -109,8 +108,8 @@ def getComputerMove(board, computerLetter): # TODO: W0621: Redefining name 'comp
     for i in range(1, 10):
         copy = getBoardCopy(board)
         if isSpaceFree(copy, i):
-            makeMove(copy, computerLetter, i)
-            if isWinner(copy, computerLetter):
+            makeMove(copy, computerPiece, i)
+            if isWinner(copy, computerPiece):
                 return i
 
     # Check if the player could win on their next move, and block them.
@@ -134,71 +133,75 @@ def getComputerMove(board, computerLetter): # TODO: W0621: Redefining name 'comp
     return chooseRandomMoveFromList(board, [2, 4, 6, 8])
 
 def isBoardFull(board):
-    ''' Function thats returns True if every space on the board has been taken. Otherwise return False.'''
+    '''Function thats returns True if every space on the board has been taken. Otherwise return False.'''
     for i in range(1, 10):
         if isSpaceFree(board, i):
             return False
     return True
 
+def inGamePlayerOutcome(turn, theBoard, playerLetter):
+    ''' Conveys the Player’s logic and adjust the board accordingly '''
+    game_status = ''
+    
+    drawBoard(theBoard)
+    move = getPlayerMove(theBoard)
+    makeMove(theBoard, playerLetter, move)
 
+    if isWinner(theBoard, playerLetter):
+        drawBoard(theBoard)
+        game_status = 'Hooray! You have won the game!'
+        print(game_status)
+        return game_status
+    
+    elif isBoardFull(theBoard):
+        drawBoard(theBoard)
+        game_status = 'The game is a tie!'
+        print(game_status)
+        return game_status
+            
+    game_status = 'computer'
+    return game_status
 
+def inGameComputerOutcome(turn, theBoard, computerLetter):
+    ''' Conveys the Computer’s logical choices and adjust the board accordingly.'''
+    game_status = ''
+    move = getComputerMove(theBoard, computerLetter)
+    makeMove(theBoard, computerLetter, move)
+
+    if isWinner(theBoard, computerLetter):
+        drawBoard(theBoard)
+        print('The computer has beaten you! You lose.')
+        game_status = 'The computer has beaten you! You lose.'
+        return game_status
+    
+    elif isBoardFull(theBoard):
+        drawBoard(theBoard)
+        print('The game is a tie!')
+        game_status = 'The game is a tie!'
+        return game_status
+        
+    game_status = 'player'
+    
+    return game_status
+    
+    
 def gameLogic():
     '''This function determines the game logic based on the users input and decision making.'''
-
-    # TODO: The following mega code block is a huge hairy monster. Break it down 
-    # into smaller methods. Use TODO s and the comment above each section as a guide 
-    # for refactoring.
     
     # Reset the board
     theBoard = [' '] * 10 # TODO: Refactor the magic number in this line (and all of the occurrences of 10 thare are conceptually the same.)
     playerLetter, computerLetter = inputPlayerLetter()
     turn = whoGoesFirst()
     print('The ' + turn + ' will go first.')
-    gameIsPlaying = True # TODO: Study how this variable is used. Does it ring a bell? (which refactoring method?) 
-                        #       See whether you can get rid of this 'flag' variable. If so, remove it.
 
-    while gameIsPlaying: # TODO: Usually (not always), loops (or their content) are good candidates to be extracted into their own function.
-                        #       Use a meaningful name for the function you choose.
-        if turn == 'player':
-            # Player’s turn.
-            drawBoard(theBoard)
-            move = getPlayerMove(theBoard)
-            makeMove(theBoard, playerLetter, move)
-
-            if isWinner(theBoard, playerLetter):
-                drawBoard(theBoard)
-                print('Hooray! You have won the game!')
-                gameIsPlaying = False
-            else:  # TODO: is this 'else' necessary?
-                if isBoardFull(theBoard):
-                    drawBoard(theBoard)
-                    print('The game is a tie!')
-                    break
-                else:  # TODO: Is this 'else' necessary?
-                    turn = 'computer'
-
+    while True:
+        if turn == 'player':  
+            turn = inGamePlayerOutcome(turn, theBoard, playerLetter)
+            
+        if turn == 'computer':
+            turn = inGameComputerOutcome(turn, theBoard, computerLetter)
         else:
-            # Computer’s turn.
-            move = getComputerMove(theBoard, computerLetter)
-            makeMove(theBoard, computerLetter, move)
-
-            if isWinner(theBoard, computerLetter):
-                drawBoard(theBoard)
-                print('The computer has beaten you! You lose.')
-                gameIsPlaying = False
-            else:     # TODO: is this 'else' necessary?
-                if isBoardFull(theBoard):
-                    drawBoard(theBoard)
-                    print('The game is a tie!')
-                    break
-                else: # TODO: Is this 'else' necessary?
-                    turn = 'player'
-
-
-
-
-
-
+            break 
 
 if __name__ == '__main__':
         
