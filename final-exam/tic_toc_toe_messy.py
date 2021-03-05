@@ -122,7 +122,7 @@ def getComputerMove(board, computerPiece):
 
     # Try to take one of the corners, if they are free.
     move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
-    if move != None: # TODO: Fix it (Hint: Comparisons to singletons like None should always be done with is or is not, never the equality/inequality operators.)
+    if move is not None: 
         return move
 
     # Try to take the center, if it is free.
